@@ -5,9 +5,11 @@ Created on Fri Apr  7 18:42:01 2017
 @author: sups
 """
 
-from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVR
 import numpy as np
 import os
+
+label = {'chinese':0,'indian':1}
 
 path = "../race_d/wld_feat/train/"
 dirs = [f for f in os.listdir(path) if os.path.isdir(os.path.join(path,f))]
@@ -21,10 +23,10 @@ for d in dirs:
     feat = open(feat_path,'r')
     for line in feat:
         feats.append(map(float, line.split()))
-        labels.append(lab)
-print len(feats)
+        labels.append(label[lab])
+print labels
 wld_feats = np.array(feats)
-model = LinearSVC(C = 500.0)
+model = LinearSVR()
 model.fit(feats,labels)
 
 print "fitted"
@@ -45,7 +47,10 @@ for d in dirs:
         count = count+1
         #print feat_path,count
         #print np.array( test_feat)
-        if lab==model.predict(np.array(test_feat).reshape(1,-1)):
+        print model.predict(np.array(test_feat).reshape(1,-1))
+        if model.predict(np.array(test_feat).reshape(1,-1))<=0.3 and lab=='chinese':
+            succ = succ+1
+        elif model.predict(np.array(test_feat).reshape(1,-1))>0.3 and lab=='indian':
             succ = succ+1
         else:
             print 'incorrect'
