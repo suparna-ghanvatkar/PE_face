@@ -16,11 +16,11 @@ void wld_feat_save(string dest_path, string path){
     string image_path;
     feats.open(dest_path, ios::out);
     dp  = opendir(path.c_str());
+    int img_count = 0;  //for sanity check
     while((dirp = readdir(dp))!=NULL){
-        //cout<<dirp->d_name<<endl;
         if(strcmp(dirp->d_name,".")&&strcmp(dirp->d_name,"..")){
             image_path = path+dirp->d_name;
-            //cout<<image_path<<endl;
+            img_count++;
             try{
                 IplImage* image = cvLoadImage(image_path.c_str());
                 IplImage* gray = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 1);
@@ -38,7 +38,8 @@ void wld_feat_save(string dest_path, string path){
             catch(...){
             }
         }
-    }       
+    }    
+    cout<<path<<" "<<img_count<<endl;
     feats.close();
 }
 int main(){
@@ -63,10 +64,16 @@ int main(){
     dest_path = dest_path_train+labels[1]+"feats";
     wld_feat_save(dest_path, path);
     /*
-     * Test set features
+     * Test set features - indian
      */
-    path = path_test;
-    dest_path = dest_path_test+"feats";
+    path = path_test+labels[0];
+    dest_path = dest_path_test+labels[0]+"feats";
+    wld_feat_save(dest_path,path);
+    /*
+     * Test set features - chinese
+     */
+    path = path_test+labels[1];
+    dest_path = dest_path_test+labels[1]+"feats";
     wld_feat_save(dest_path,path);
     return 0;
 }
