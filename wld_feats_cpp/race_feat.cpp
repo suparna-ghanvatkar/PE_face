@@ -54,15 +54,15 @@ int main(){
      */
     string path;    //for path to images
     string dest_path;   //for path to feature file saving
-    path = path_train+labels[0];
-    dest_path = dest_path_train+labels[0]+"feats";
-    wld_feat_save(dest_path, path);
+//     path = path_train+labels[0];
+//     dest_path = dest_path_train+labels[0]+"feats";
+//     wld_feat_save(dest_path, path);
     /*
      * Chinese training
      */
-    path = path_train+labels[1];
-    dest_path = dest_path_train+labels[1]+"feats";
-    wld_feat_save(dest_path, path);
+//     path = path_train+labels[1];
+//     dest_path = dest_path_train+labels[1]+"feats";
+//     wld_feat_save(dest_path, path);
     /*
      * Test set features - indian
      */

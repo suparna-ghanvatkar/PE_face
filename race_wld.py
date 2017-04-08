@@ -26,11 +26,12 @@ for d in dirs:
         labels.append(label[lab])
 print labels
 wld_feats = np.array(feats)
-model = LinearSVR()
+model = LinearSVR(C=10.0, max_iter = 2000.0)
 model.fit(feats,labels)
 
 print "fitted"
 feat.close()
+class_crit = 0.3
 test_path = "../race_d/wld_feat/test/"
 dirs = [f for f in os.listdir(path) if os.path.isdir(os.path.join(path,f))]
 count = 0
@@ -48,9 +49,9 @@ for d in dirs:
         #print feat_path,count
         #print np.array( test_feat)
         print model.predict(np.array(test_feat).reshape(1,-1))
-        if model.predict(np.array(test_feat).reshape(1,-1))<=0.3 and lab=='chinese':
+        if model.predict(np.array(test_feat).reshape(1,-1))<=class_crit and lab=='chinese':
             succ = succ+1
-        elif model.predict(np.array(test_feat).reshape(1,-1))>0.3 and lab=='indian':
+        elif model.predict(np.array(test_feat).reshape(1,-1))>class_crit and lab=='indian':
             succ = succ+1
         else:
             print 'incorrect'
