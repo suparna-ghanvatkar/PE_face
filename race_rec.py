@@ -50,7 +50,7 @@ for d in dirs:
 
 print labels
 recognizer.train(feats,np.array(labels))
-
+'''
 path = '../race_d/test/'
 targ = '../race_d/recognizer_results/'
 imgno = 0
@@ -90,4 +90,4 @@ for image_path in image_paths:
     cv2.putText(img1, pred, (10,30), cv2.FONT_ITALIC, 1.0, (0,0,255),3)
     cv2.imwrite(targ+str(imgno)+'.png', img1)
     cv2.waitKey(0)
-
+'''

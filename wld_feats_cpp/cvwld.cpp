@@ -39,7 +39,7 @@ CvMat* cvExtractWLD( const CvArr* image, CvWLDParams params )
 	const int alpha = 6;
 	const int beta = 0;
 	/* it is two important params (in implementation perspective) after consulting
-	 * the author of the paper, the alpha will exaggrate the different and beta to
+	 * the alpha will exaggrate the different and beta to
 	 * avoid where ptr[0] is zero */
 	for ( i = 1; i < img->rows - 1; i++ )
 	{

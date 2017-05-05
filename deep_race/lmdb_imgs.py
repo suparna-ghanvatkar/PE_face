@@ -17,14 +17,14 @@ def write_images_to_lmdb(img_dir, db_name, label):
     for root, dirs, files in os.walk(img_dir, topdown = False):
         if root != img_dir:
             continue
-        map_size = 200*200*3*3*len(files)
+        map_size = 400*400*3*5*len(files)
         env = lmdb.Environment(db_name, map_size=map_size)
         txn = env.begin(write=True,buffers=True)
         max_key = env.stat()["entries"]
         for idx, name in enumerate(files):
             X = cv2.imread(os.path.join(root, name))
-            X = cv2.resize(X, (100,100))
-            #print X
+            width, height, ch = X.shape
+            X = cv2.resize(X, (256,256))
             y = label
             datum = array_to_datum(X,y)
             str_id = '{:08}'.format(max_key+idx)
@@ -33,8 +33,8 @@ def write_images_to_lmdb(img_dir, db_name, label):
     env.close()
     print " ".join(["Writing to", db_name, "done!"])
 
-path = '../../race_d/train/'
+path = '../../race_d/test/'
 races = ['indian','chinese']
 for i in range(2):
     print i
-    write_images_to_lmdb(path+races[i], 'train_cnn', int(i))
+    write_images_to_lmdb(path+races[i], 'test_cnn', int(i))

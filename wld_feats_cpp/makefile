@@ -7,7 +7,7 @@ CXXFLAGS = -O2 --fast-math -msse2
 all: race_feat
 
 clean:
-	rm *.o ../lib/*.o
+	rm *.o
 
 race_feat: race_feat.o cvwld.o
 	$(CXX) -o $@ $^ $(LINKFLAG)
